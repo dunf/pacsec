@@ -27,8 +27,8 @@ def parse_installed_packages():
 
 def parse_pkg_data(pkgs, installed_packages):
     # For each package in Arch security tracker, check against installed packages
-    print("PACKAGE{:<11} VERSION{:<7} SEVERITY{:<2} STATUS{:<9} FIX{:<10} CVE{}"
-          .format('', '', '', '', '', ''))
+    print("PACKAGE{:<11} VERSION{:<7} SEVERITY{:<2} STATUS{:<9} FIX{:<10} CVE"
+          .format('', '', '', '', ''))
     for pkg in pkgs:
         for p in pkg['packages']:
             v = installed_packages.get(p)
