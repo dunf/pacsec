@@ -28,17 +28,22 @@ def parse_installed_packages():
 
 def parse_pkg_data(pkgs, installed_packages):
     # For each package in Arch security tracker, check against installed packages
+    print("PACKAGE{:<11} VERSION{:<7} SEVERITY{:<2} STATUS{:<9} FIXED{:<8} CVE{} ".
+          format('', '', '', '', '', ''))
     for pkg in pkgs:
         for p in pkg['packages']:
             v = installed_packages.get(p)
 
             if v == pkg['affected']:
                 fix = pkg['fixed']
-                print("Severity: {:<10}{}-{} is affected by vulnerability"
-                      " found in {}".format(
-                    pkg['severity'],
+                print("{:<18} {:<14} {:<10} {:<12} {:<2} {} {:<8} {}".format(
                     p,
                     pkg['affected'],
+                    pkg['severity'],
+                    pkg['status'],
+                    '',
+                    pkg['fixed'],
+                    '',
                     pkg['issues']
                 ))
 
