@@ -4,7 +4,6 @@ import subprocess
 import requests
 
 
-VERSION = 0.1
 URL = 'https://security.archlinux.org/'
 
 def request_data(url):
@@ -35,7 +34,6 @@ def parse_pkg_data(pkgs, installed_packages):
             v = installed_packages.get(p)
 
             if v == pkg['affected']:
-                fix = pkg['fixed']
                 print("{:<18} {:<14} {:<10} {:<12} {:<2} {} {:<8} {}".format(
                     p,
                     pkg['affected'],
@@ -50,11 +48,10 @@ def parse_pkg_data(pkgs, installed_packages):
 
 def main():
     subprocess.run(['/usr/bin/pacman -Qs > /tmp/pacsec.tmp'],
-                  shell=True, stdout=subprocess.PIPE)
-
+                   shell=True, stdout=subprocess.PIPE)
     installed_packages = parse_installed_packages()
     data = request_data(URL + '/json')
-    dataset = parse_pkg_data(data, installed_packages)
+    parse_pkg_data(data, installed_packages)
 
 
 if __name__ == '__main__':
