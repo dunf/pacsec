@@ -6,7 +6,7 @@ import argparse
 
 
 URL = 'https://security.archlinux.org/'
-VERSION = '0.1.2'
+VERSION = '0.1.3'
 
 
 def args():
@@ -25,7 +25,6 @@ def request_data(url):
 def parse_installed_packages():
     pkgs = {}
     with open('/tmp/pacsec.tmp') as file:
-
         for line in file:
             if line.startswith('local'):
                 line = line.split(' ')
@@ -37,25 +36,19 @@ def parse_installed_packages():
 
 def compare_pkg_data(pkgs, installed_packages):
     # For each package in Arch security tracker, check against installed packages
-    print("PACKAGE{:<11} VERSION{:<7} SEVERITY{:<2} STATUS{:<9} FIX{:<10} CVE"
-          .format('', '', '', '', ''))
     for pkg in pkgs:
         for p in pkg['packages']:
             installed_version = installed_packages.get(p)
             if installed_version == pkg['affected']:
-                print("{:<18} {:<14} {:<10} {:<12} {:<2} {} {:<8} {}".format(
-                    p,
-                    pkg['affected'],
-                    pkg['severity'],
-                    pkg['status'],
-                    '',
-                    pkg['fixed'],
-                    '',
-                    pkg['issues']
-                ))
+                print('PACKAGE: {:>20}{}'.format('', p))
+                print('AFFECTED VERSION: {:>11}{}'.format('', pkg['affected']))
+                print('FIX: {:<24}{}'.format('', pkg['fixed']))
+                print('VULNERABILITY: {:<14}{}'.format('', pkg['type']))
+                print('SEVERITY: {:<19}{}'.format('', pkg['severity']))
+                print('CVE: {:<24}{}\n'.format('', ', '.join(pkg['issues'])))
 
 
-def main(argv):
+def main():
     subprocess.run(['/usr/bin/pacman -Qs > /tmp/pacsec.tmp'],
                    shell=True, stdout=subprocess.PIPE)
     installed_packages = parse_installed_packages()
@@ -65,4 +58,4 @@ def main(argv):
 
 if __name__ == '__main__':
     args = args()
-    main(args)
+    main()
