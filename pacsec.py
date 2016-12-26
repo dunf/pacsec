@@ -40,12 +40,13 @@ def compare_pkg_data(pkgs, installed_packages):
         for p in pkg['packages']:
             installed_version = installed_packages.get(p)
             if installed_version == pkg['affected']:
-                print('PACKAGE: {:>20}{}'.format('', p))
-                print('AFFECTED VERSION: {:>11}{}'.format('', pkg['affected']))
-                print('FIX: {:<24}{}'.format('', pkg['fixed']))
-                print('VULNERABILITY: {:<14}{}'.format('', pkg['type']))
-                print('SEVERITY: {:<19}{}'.format('', pkg['severity']))
-                print('CVE: {:<24}{}\n'.format('', ', '.join(pkg['issues'])))
+                print('PACKAGE: {:<16}{}'.format('', p))
+                print('AFFECTED VERSION: {:<7}{}'.format('', pkg['affected']))
+                print('FIX: {:<20}{}'.format('', pkg['fixed']))
+                print('STATUS: {:<17}{}'.format('', pkg['status']))
+                print('VULNERABILITY: {:<10}{}'.format('', pkg['type']))
+                print('SEVERITY: {:<15}{}'.format('', pkg['severity']))
+                print('CVE: {:<20}{}\n'.format('', ', '.join(pkg['issues'])))
 
 
 def main():
