@@ -6,13 +6,12 @@ import argparse
 
 
 URL = 'https://security.archlinux.org/'
-VERSION = '0.1.3'
+VERSION = '0.1.4'
 
 
 def args():
     parser = argparse.ArgumentParser()
-    parser.add_argument('-V', '--version', action='version',
-                        version='%(prog)s v{}'.format(VERSION))
+    parser.add_argument('-V', '--version', action='version', version='%(prog)s v{}'.format(VERSION))
     return parser.parse_args()
 
 
@@ -35,11 +34,11 @@ def parse_installed_packages():
 
 
 def compare_pkg_data(pkgs, installed_packages):
-    # For each package in Arch security tracker, check against installed packages
+    # For each pkg in the Arch security tracker, check against installed pkgs
     for pkg in pkgs:
         for p in pkg['packages']:
             installed_version = installed_packages.get(p)
-            if installed_version == pkg['affected']:
+            if installed_version == pkg['affected'] and 'Not affected' not in pkg['status']:
                 print('PACKAGE: {:<16}{}'.format('', p))
                 print('AFFECTED VERSION: {:<7}{}'.format('', pkg['affected']))
                 print('FIX: {:<20}{}'.format('', pkg['fixed']))
@@ -50,8 +49,7 @@ def compare_pkg_data(pkgs, installed_packages):
 
 
 def main():
-    subprocess.run(['/usr/bin/pacman -Qs > /tmp/pacsec.tmp'],
-                   shell=True, stdout=subprocess.PIPE)
+    subprocess.run(['/usr/bin/pacman -Qs > /tmp/pacsec.tmp'], shell=True, stdout=subprocess.PIPE)
     installed_packages = parse_installed_packages()
     data = request_data(URL + 'json')
     compare_pkg_data(data, installed_packages)
