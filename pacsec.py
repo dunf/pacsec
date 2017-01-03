@@ -24,16 +24,14 @@ def request_data(url):
     return data
 
 
-
 def parse_installed_packages():
     pkgs = {}
     with open('/tmp/pacsec.tmp') as file:
         for line in file:
-            if line.startswith('local'):
-                line = line.split(' ')
-                package = line[0].split('/')[1]
-                version = line[1].strip('\n')
-                pkgs[package] = version
+            line = line.split(' ')
+            package = line[0]
+            version = line[1].strip('\n')
+            pkgs[package] = version
     return pkgs
 
 
@@ -61,8 +59,9 @@ def compare_pkg_data(pkgs, installed_packages):
         print('Low severity: {:>9}'.format(info.get('Low')))
         print('Vulnerable packages:  {}'.format(sum(info.values())))
 
+
 def main():
-    subprocess.run(['/usr/bin/pacman -Qs > /tmp/pacsec.tmp'], shell=True, stdout=subprocess.PIPE)
+    subprocess.run(['/usr/bin/pacman -Q > /tmp/pacsec.tmp'], shell=True, stdout=subprocess.PIPE)
     installed_packages = parse_installed_packages()
     data = request_data(URL + 'json')
     compare_pkg_data(data, installed_packages)
