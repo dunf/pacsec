@@ -6,7 +6,7 @@ import argparse
 
 
 URL = 'https://security.archlinux.org/'
-VERSION = '0.2.0'
+VERSION = '0.2.1'
 
 
 def args():
