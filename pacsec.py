@@ -1,12 +1,13 @@
 #!/usr/bin/python
 
+import sys
 import subprocess
 import requests
 import argparse
 
 
 URL = 'https://security.archlinux.org/'
-VERSION = '0.3.0'
+VERSION = '0.3.1'
 
 
 def args():
@@ -20,9 +21,13 @@ def args():
 
 
 def request_data(url):
-    r = requests.get(url)
-    data = r.json()
-    return data
+    try:
+        r = requests.get(url)
+        data = r.json()
+        return data
+    except requests.ConnectionError:
+        print('No connection')
+        sys.exit(1)
 
 
 def parse_installed_packages():
