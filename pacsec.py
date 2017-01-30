@@ -7,16 +7,17 @@ import argparse
 
 
 URL = 'https://security.archlinux.org/'
-VERSION = '0.3.1'
+VERSION = '0.3.2'
 
 
 def args():
     parser = argparse.ArgumentParser()
     mu = parser.add_mutually_exclusive_group()
-    parser.add_argument('-V', '--version', action='version', version='%(prog)s v{}'.format(VERSION))
+    parser.add_argument(
+        '-V', '-v', '--version', action='version', version='%(prog)s v{}'.format(VERSION))
     mu.add_argument('-s', '--summary', action='store_true', help='show summary of information')
-    mu.add_argument('-f', '--fix', action='store_true', help='show only vulnerabilities that have'
-                                                             'an available fix.')
+    mu.add_argument('-f', '--fix', action='store_true',
+                    help='show only vulnerabilities that have an available fix.')
     return parser.parse_args()
 
 
