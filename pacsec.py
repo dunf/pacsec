@@ -6,7 +6,7 @@ import requests
 import argparse
 
 
-URL = 'https://security.archlinux.org/'
+URL = 'https://security.archlinux.org/issues/all/'
 VERSION = '0.3.2'
 
 
