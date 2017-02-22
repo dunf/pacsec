@@ -7,7 +7,7 @@ import argparse
 
 
 URL = 'https://security.archlinux.org/issues/all/'
-VERSION = '0.3.2'
+VERSION = '0.3.3'
 
 
 def args():
@@ -44,7 +44,7 @@ def parse_installed_packages():
 
 def compare_pkg_data(pkgs, installed_packages):
     # For each pkg in the Arch security tracker, check against installed pkgs
-    info = {'Critical': 0, 'High': 0, 'Medium': 0, 'Low': 0}
+    info = {'Critical': 0, 'High': 0, 'Medium': 0, 'Low': 0, 'Unknown': 0}
     for pkg in pkgs:
         for p in pkg['packages']:
             installed_version = installed_packages.get(p)
@@ -61,6 +61,7 @@ def compare_pkg_data(pkgs, installed_packages):
         print('High severity: {:>8}'.format(info.get('High')))
         print('Medium severity: {:>6}'.format(info.get('Medium')))
         print('Low severity: {:>9}'.format(info.get('Low')))
+        print('Unknown: {:>14}'.format(info.get('Unknown')))
         print('Vulnerable packages:  {}'.format(sum(info.values())))
 
 
